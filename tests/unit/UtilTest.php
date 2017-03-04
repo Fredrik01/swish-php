@@ -25,6 +25,16 @@ class UtilTest extends Test
         $this->assertEquals($id, Util::getPaymentRequestIdFromResponse($response));
     }
 
+    public function testGetPaymentRequestTokenFromResponse()
+    {
+        $token = 'ABC123';
+        $response = new Response(200, [
+            'PaymentRequestToken' => $token
+        ]);
+
+        $this->assertEquals($token, Util::getPaymentRequestTokenFromResponse($response));
+    }
+
     public function testGetRefundIdFromResponse()
     {
         $id = 'ABC123';
