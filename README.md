@@ -1,14 +1,21 @@
+
 # Swish-PHP
+This is a fork of [helmutschneider/swish-php](https://github.com/helmutschneider/swish-php) that supports Docker.
+
 Swish-PHP is a small wrapper for the swish merchant api. See https://www.getswish.se/handel/ for more information.
 
 ## Dependencies
-- php 5.5.9 or newer with curl & openssl
-- composer
+- PHP 5.5.9 or newer
+- curl
+- openssl
+
+## Dev dependencies
+- Just Docker and Docker Compose
 
 ## Installation
 ```shell
-git clone https://github.com/helmutschneider/swish-php.git
-composer install
+git clone https://github.com/Fredrik01/swish-php.git
+docker-compose run --rm swish composer install
 ```
 
 ## Obtaining test certificates
@@ -36,14 +43,14 @@ class Client
      * @throws ValidationException
      */
     public function createPaymentRequest(PaymentRequest $request): string;
-    
+
     /**
      * @param string $id Payment request id
      * @return PaymentRequest
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function getPaymentRequest(string $id): PaymentRequest;
-    
+
     /**
      * @param Refund $refund
      * @return string refund id
@@ -51,7 +58,7 @@ class Client
      * @throws ValidationException
      */
     public function createRefund(Refund $refund): string;
-    
+
     /**
      * @param string $id Refund id
      * @return Refund
@@ -100,5 +107,11 @@ must obtain a PHP-version that is compiled with cURL linked against OpenSSL or s
 To run the tests you need certificates for the Swish test server. Place the root certificate in `tests/_data/root.pem` and
 the client certificate in `tests/_data/client.pem`.
 ```shell
-vendor/bin/codecept run
+docker-compose run --rm swish ./extract.sh bundle.p12 swish swish
+```
+
+Place the generated certs in `tests/_data` and run the tests.
+
+```
+docker-compose run --rm swish codecept run
 ```
