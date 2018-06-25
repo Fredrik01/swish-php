@@ -113,5 +113,6 @@ docker-compose run --rm swish ./extract.sh bundle.p12 swish swish
 Place the generated certs in `tests/_data` and run the tests.
 
 ```
-docker-compose run --rm swish codecept run
+docker-compose run --rm swish composer install
+docker-compose run --rm swish phpunit
 ```

@@ -5,11 +5,8 @@ RUN apk add --update curl bash openssl && \
 
 WORKDIR /var/www/html
 
-COPY . .
-
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
-    && composer install --no-interaction
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 ENV PATH /var/www/html/vendor/bin:$PATH
