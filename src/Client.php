@@ -97,11 +97,9 @@ class Client
      */
     public function createPaymentRequest(PaymentRequest $request)
     {
-        $response = $this->sendRequest('POST', '/paymentrequests', [
+        return $this->sendRequest('POST', '/paymentrequests', [
             'json' => $this->filterRequestBody((array) $request),
         ]);
-
-        return Util::getObjectIdFromResponse($response);
     }
 
     /**

@@ -12,6 +12,7 @@ use HelmutSchneider\Swish\Client;
 use HelmutSchneider\Swish\PaymentRequest;
 use HelmutSchneider\Swish\Refund;
 use HelmutSchneider\Swish\ValidationException;
+use HelmutSchneider\Swish\Util;
 
 class ClientTest extends TestCase
 {
@@ -59,7 +60,8 @@ class ClientTest extends TestCase
     {
         $paymentRequest = new PaymentRequest($this->paymentRequest);
         $paymentRequest->payerAlias = $this->randomSwedishPhoneNumber();
-        $id = $this->client->createPaymentRequest($paymentRequest);
+        $response = $this->client->createPaymentRequest($paymentRequest);
+        $id = Util::getObjectIdFromResponse($response);
         $res = $this->client->getPaymentRequest($id);
         $this->assertEquals($id, $res->id);
     }
@@ -85,7 +87,8 @@ class ClientTest extends TestCase
             'amount' => '100',
         ]);
 
-        $id = $this->client->createPaymentRequest($pr);
+        $response = $this->client->createPaymentRequest($pr);
+        $id = Util::getObjectIdFromResponse($response);
 
         // the test server automatically sets the request
         // to "PAID" if we wait a couple of seconds.
